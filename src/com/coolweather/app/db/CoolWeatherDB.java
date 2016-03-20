@@ -149,5 +149,35 @@ public class CoolWeatherDB {
 		}
 		return list;
 	}
+	
+	/**
+	 * 根据province_id查询province_code
+	 */
+	public String getProvinceCodeFromProviceId(int provinceId){
+		String provinceCode = null;
+		Cursor cursor = db.query("Province", null, "id = ?", new String[]{String.valueOf(provinceId)}, null, null, null);
+		if(cursor.moveToFirst()){
+			provinceCode = cursor.getString(cursor.getColumnIndex("province_code"));
+		}
+		if(cursor != null){
+			cursor.close();
+		}
+		return provinceCode;
+	}
+	
+	/**
+	 * 根据city_id查询city_code
+	 */
+	public String getCityCodeFromCityId(int cityId){
+		String cityCode = null;
+		Cursor cursor = db.query("City", null, "id = ?", new String[]{String.valueOf(cityId)}, null, null, null);
+		if(cursor.moveToFirst()){
+			cityCode = cursor.getString(cursor.getColumnIndex("city_code"));
+		}
+		if(cursor != null){
+			cursor.close();
+		}
+		return cityCode;
+	}
 
 }

@@ -74,7 +74,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		if(!TextUtils.isEmpty(countyCode)){
 			publishText.setText("同步中...");
 			weatherInfoLayout.setVisibility(View.INVISIBLE);
-			queryWeatherCode(countyCode);
+			queryWeatherInfo(countyCode);
 		} else {
 			showWeather();
 		}
@@ -85,18 +85,18 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	}
 	
 	/**
-	 * 查询县级代号所对应的天气代号。
+	 * 查询县级代号所对应的天气代号。 已废掉
 	 */
-	private void queryWeatherCode(String countyCode) {
-		String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
-		queryFromServer(address, "countyCode");
-	}
+//	private void queryWeatherCode(String countyCode) {
+//		String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
+//		queryFromServer(address, "countyCode");
+//	}
 
 	/**
 	 * 查询天气代号所对应的天气
 	 */
-	private void queryWeatherInfo(String weatherCode){
-		String address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
+	private void queryWeatherInfo(String countyCode){
+		String address = "http://m.weather.com.cn/mweather/" + countyCode + ".shtml";
 		queryFromServer(address, "weatherCode");
 	}
 	
@@ -125,24 +125,14 @@ public class WeatherActivity extends Activity implements OnClickListener {
 			
 			@Override
 			public void onFinish(final String response) {
-				if("countyCode".equals(type)){
-					if(!TextUtils.isEmpty(response)){
-						String[] array = response.split("\\|");
-						if(array != null && array.length == 2){
-							String weatherCode = array[1];
-							queryWeatherInfo(weatherCode);
-						}
-					}
-				} else if ("weatherCode".equals(type)){
-					Utility.handleWeatherResponse(WeatherActivity.this, response);
-					runOnUiThread(new Runnable() {
+				Utility.handleWeatherResponse(WeatherActivity.this, response);
+				runOnUiThread(new Runnable() {
 						
 						@Override
 						public void run() {
 							showWeather();
 						}
 					});
-				}
 			}
 			
 			@Override

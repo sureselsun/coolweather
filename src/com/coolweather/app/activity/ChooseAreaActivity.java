@@ -40,6 +40,19 @@ public class ChooseAreaActivity extends Activity {
 	public static final int LEVEL_CITY = 1;
 	public static final int LEVEL_COUNTY = 2;
 	
+	/**
+	 * 读取Province数据网址 
+	 */
+	public static final String PROVINCE_HTML_ADDRESS = "http://www.weather.com.cn/data/list3/city.xml";
+	/**
+	 * 读取City数据网址    address + id + .html
+	 */
+	public static final String CITY_HTML_ADDRESS = "http://m.weather.com.cn/city3jdata/provshi/";
+	/**
+	 * 读取County数据网址    address + id + .html
+	 */
+	public static final String COUNNTY_HTML_ADDRESS = "http://m.weather.com.cn/city3jdata/station/";
+	
 	private ProgressDialog progressDialog;
 	private TextView titleText;
 	private ListView listView;
@@ -172,11 +185,15 @@ public class ChooseAreaActivity extends Activity {
 	 * 根据传入的代号和类型从服务器上查询省市县数据
 	 */
 	private void queryFromServer(final String code, final String type) {
-		String address;
+		String address = null;
 		if(!TextUtils.isEmpty(code)){
-			address = "http://www.weather.com.cn/data/list3/city" + code + ".xml";
+			if("city".equals(type)){
+				address = CITY_HTML_ADDRESS + code + ".html";
+			} else if ("county".equals(type)){
+				address = COUNNTY_HTML_ADDRESS + code + ".html";
+			}
 		} else {
-			address = "http://www.weather.com.cn/data/list3/city.xml";
+			address = PROVINCE_HTML_ADDRESS;
 		}
 		showProgressDialog();
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
