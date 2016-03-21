@@ -102,22 +102,25 @@ public class Utility {
 	/**
 	 * 解析服备器返回的JSON数据，并将解析出的数据存储到本地。
 	 */
-	public static void handleWeatherResponse(Context context, String response){
+	public static void handleWeatherResponse(Context context, String response, String countyCode){
 		WeatherInfoString weaterhInfoObjcet = new WeatherInfoString(response);
-		saveWeatherInfo(context, weaterhInfoObjcet.getWeather(), weaterhInfoObjcet.getUpdateTime(), weaterhInfoObjcet.getWeatherDay());
+		saveWeatherInfo(context, weaterhInfoObjcet.getWeather(), weaterhInfoObjcet.getUpdateTime(), weaterhInfoObjcet.getWeatherDay(), countyCode);
 	}
 	
 	/**
 	 * 将服务器返回的所有天气信息存储到SharedPreferences文件中.
 	 */
-	private static void saveWeatherInfo(Context context, WeatherInfo weatherInfo, String updateTime, String weatherDay) {
+	private static void saveWeatherInfo(Context context, WeatherInfo weatherInfo, String updateTime, String weatherDay, String countyCode) {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);
 		editor.putString("city_name", weatherInfo.getCityName());
 		editor.putString("temp1", weatherInfo.getTemperature1());
 		editor.putString("weather_desp", weatherInfo.getWeather1());
+		editor.putString("weather_wind", weatherInfo.getWind());
+		editor.putString("weather_grand", weatherInfo.getGrade());
 		editor.putString("publish_time", updateTime);
 		editor.putString("current_date", weatherDay);
+		editor.putString("county_code", countyCode);
 		editor.commit();
 	}
 

@@ -114,6 +114,17 @@ public class ChooseAreaActivity extends Activity {
 					queryCounties();
 				} else if (currentLevel == LEVEL_COUNTY) {
 					String countyCode = countyList.get(index).getCountyCode();
+					
+					//反解释植割市代码
+					String coun = countyCode.substring(0, 5);
+					
+					
+					if ("10101".equals(coun)||"10102".equals(coun)||"10103".equals(coun)||"10104".equals(coun)){
+						String tmp1 = countyCode.substring(5, 7);
+						String tmp2 = countyCode.substring(7);
+						countyCode = coun + tmp2 + tmp1;
+					}  //
+					
 					Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
 					intent.putExtra("county_code", countyCode);
 					startActivity(intent);

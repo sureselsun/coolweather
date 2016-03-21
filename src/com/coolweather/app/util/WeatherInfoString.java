@@ -88,7 +88,7 @@ public class WeatherInfoString {
 		weather.setWeather1(tmps[0].split("\"")[7]);
 		weather.setTemperature1(tmps[1].split(">")[1]);
 		weather.setWeather2(tmps[2].split("<span>")[1].split("</span>")[0]);
-		weather.setWind(tmps[2].split("<span>")[2].split("</span>")[0]);
+		weather.setGrade(tmps[2].split("<span>")[2].split("</span>")[0]);
 		weather.setWind(tmps[2].split("<span>")[3].split("</span>")[0]);
 	}
 }
